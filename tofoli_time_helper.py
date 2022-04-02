@@ -24,11 +24,11 @@
 from datetime import datetime, timedelta
 
 class tofoli_time_helper():
-    def __init__(self, start_date, start_time, end_time, group, type_interval, interval, day_fixed, dows=[0,1,2,3,4,5,6]):
+    def __init__(self, start_date, start_time, end_time, group, type_interval, interval=1, day_fixed=0, dows=[0,1,2,3,4,5,6]):
         self.__start_date = start_date
         self.__start_time = start_time
         self.__end_time = end_time
-        self.__start_run = self.__valid(start_date + " " + start_time, "%Y-%m-%d %H:%M")
+        self.__start_run = self.__valid(self.__start_date + " " + start_time, "%Y-%m-%d %H:%M")
         self.__group = group
         self.__type_interval = type_interval
         self.__interval = interval
@@ -83,7 +83,7 @@ class tofoli_time_helper():
 
 
     def next_run(self):
-        now = datetime.now()
+        now = datetime.now().replace(second=0, microsecond=0)
 
         if self.__next_run <= now and self.__group == "t":
             self.__next_run = self.__valid(now.__str__()[:10] + " " + self.__start_time, "%Y-%m-%d %H:%M")
