@@ -1,7 +1,5 @@
 import threading
 import time
-from datetime import datetime
-from tofoli_time_helper import tofoli_time_helper
 
 class tofoli_thread(threading.Thread):
     def __init__(self, name="unnamed", times=3, sleep=1):
