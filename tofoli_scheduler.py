@@ -1,57 +1,38 @@
-from datetime import datetime
 import sys
 import os
 import time
-import threading
-from tofoli_thread import tofoli_thread
+from datetime import datetime
+from tofoli_control_thread import tofoli_control_thread
+from tofoli_time_helper import tofoli_time_helper
 
+
+# TODO Task Class
 # TODO Load Config File
 # TODO Task List
 # TODO Task List Iterator
-# TODO Update Next Time Run
-
-def clear_threads(threads):
-    for j in threads:
-        if not j.is_alive():
-            threads.remove(j)
-
-    return threads
 
 
 def main():
+    thread_control = tofoli_control_thread()
     jobs = []
+
     print("Start")
 
-    jobs.append(tofoli_thread("Thread 1"))
-    jobs.append(tofoli_thread("Thread 2", 2, 2))
+    jobs.append(tofoli_time_helper("2022-01-01", "16:20", "18:04", "t", "m", 1, dows=[1,2,3,4,5,6]))
 
-    for j in jobs: j.start()
+    while True:
+        for j in jobs:
+            if j.get_next_run <= datetime.now().replace(second=0, microsecond=0):
+                j.next_run()
+                thread_control.add("")
+        time.sleep(30)
 
-    while threading.activeCount() > 1:
-        if threading.activeCount() < 3:
-            jobs.append(tofoli_thread("Thread 3", 3, 2))
-            jobs[jobs.__len__()-1].start()
-
-        jobs = clear_threads(jobs)
-        time.sleep(0.5)
-
-    # while True:
-    #     for j in jobs:
-    #         if j.next_run <= datetime.now().replace(second=0, microsecond=0):
-    #             j.run()
-    #             print(j.next_run)
-
-        # time.sleep(0.5)
-
-    jobs = clear_threads(jobs)
-    print(jobs)
-
-    print("End")
 
 if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
+        print("End")
         try:
             sys.exit(0)
         except SystemExit:
