@@ -1,19 +1,11 @@
 import threading
-import time
+
+# TODO System Calls
 
 class tofoli_thread(threading.Thread):
-    def __init__(self, name="unnamed", times=3, sleep=1):
+    def __init__(self, cmd):
         threading.Thread.__init__(self)
-        self.__name = name
-        self.__times = times
-        self.__sleep = sleep
-    
+        self.__cmd = cmd
 
     def run(self):
-        for i in range(self.__times):
-            print(f"{self.__name}...")
-            time.sleep(self.__sleep)
-
-
-    @property
-    def name(self): return self.__name
+        print("run", self.__cmd)
