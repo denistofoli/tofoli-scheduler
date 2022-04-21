@@ -13,7 +13,7 @@ class tofoli_control_thread(threading.Thread):
         while True:
             for t in self.__threads:
                 if not t.is_alive():
-                    print("Finish thread", t)
+                    # TODO Generate Log Run
                     self.__threads.remove(t)
             time.sleep(0.5)
 
