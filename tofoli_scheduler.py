@@ -18,13 +18,13 @@ def main():
 
     print("Start")
 
-    jobs.append(tofoli_time_helper("2022-01-01", "16:20", "18:04", "t", "m", 1, dows=[1,2,3,4,5,6]))
+    jobs.append(tofoli_time_helper("2022-01-01", "12:00", "18:04", "t", "m", 1, dows=[0,1,2,3,4,5,6]))
 
     while True:
         for j in jobs:
             if j.get_next_run <= datetime.now().replace(second=0, microsecond=0):
                 j.next_run()
-                thread_control.add("")
+                thread_control.add("ls -la")
         time.sleep(30)
 
 
