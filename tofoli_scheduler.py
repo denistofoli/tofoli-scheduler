@@ -3,28 +3,36 @@ import os
 import time
 from datetime import datetime
 from tofoli_control_thread import tofoli_control_thread
-from tofoli_time_helper import tofoli_time_helper
+from tofoli_task import tofoli_task
 
 
-# TODO Task Class
-# TODO Load Config File
-# TODO Task List
-# TODO Task List Iterator
+def load_config_tasks():
+    tasks = []
+
+    # TODO Load Config File
+    tasks.append(tofoli_task("Tarefa de testes",
+                             "notify-send task",
+                             "2022-01-01",
+                             "08:00",
+                             "18:00",
+                             "t",
+                             "m",
+                             1,
+                             [0,1,2,3,4,5,6]))
+    return tasks
 
 
 def main():
     thread_control = tofoli_control_thread()
-    jobs = []
+    tasks = load_config_tasks()
 
     print("Start")
 
-    jobs.append(tofoli_time_helper("2022-01-01", "12:00", "18:04", "t", "m", 1, dows=[0,1,2,3,4,5,6]))
-
     while True:
-        for j in jobs:
-            if j.get_next_run <= datetime.now().replace(second=0, microsecond=0):
-                j.next_run()
-                thread_control.add("ls -la")
+        for t in tasks:
+            if t.get_next_run <= datetime.now().replace(second=0, microsecond=0):
+                t.next_run()
+                thread_control.add(t.cmd)
         time.sleep(30)
 
 
