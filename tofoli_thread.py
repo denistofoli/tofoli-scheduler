@@ -14,7 +14,6 @@ class tofoli_thread(threading.Thread):
                     .stdout.decode('UTF-8') \
                     .__str__() \
                     .split('\n')
-        return 
 
 
     @property
